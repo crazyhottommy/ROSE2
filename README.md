@@ -1,70 +1,87 @@
-# ROSE : RANK ORDERING OF SUPER-ENHANCERS
 
-CLONED using SOURCETREE from: https://bitbucket.org/young_computation/rose/src/master/
+# ROSE: Rank Ordering of Super-Enhancers
 
-### Changes from Source.
-1. USAGE
+ROSE (Rank Ordering of Super-Enhancers) is a computational pipeline for the identification and analysis of super-enhancers from ChIP-seq data. This repository provides a Python 3-compatible, location-independent implementation, with additional support for Docker-based deployment.
 
-	```bash
-	PATHTO=/path/to/ROSE
-	PYTHONPATH=$PATHTO/lib
-	export PYTHONPATH
-	export PATH=$PATH:$PATHTO/bin
+## Overview
 
-	ROSE_main.py [options] -g [GENOME] -i [INPUT_REGION_GFF] -r [RANKBY_BAM_FILE] -o [OUTPUT_FOLDER] [OPTIONAL_FLAGS]
-	```
+ROSE enables researchers to:
+- Identify super-enhancers from ChIP-seq data
+- Rank enhancer regions by signal density
+- Map stitched enhancers to genes
 
-1. Update: 
+## Key Changes
 
-	* ROSE is executable independent of software directory location.
-	* ROSE is compatible with python3
-	* ROSE as a docker image: ghcr.io/stjude/abralab/rose:latest
+- Compatible with Python 3
+- Executable independent of installation directory
+- Available as a Docker image: `ghcr.io/stjude/abralab/rose:latest`
 
-1. REQUIREMENTS:
+## Installation & Setup
 
-	1. All files :
-	All input files much be in one directory.
+Clone the repository and set up the environment variables:
 
-	1. Annotation file :
-	Annotation file should be in UCSC table track format (https://genome.ucsc.edu/cgi-bin/hgTables).
-	Annotation file should be saved as [GENOME]_refseq.ucsc (example: hg19_refseq.ucsc).
-	Annotation file should be in annotation/ folder in the input files directory.
+```bash
+PATHTO=/path/to/ROSE
+export PYTHONPATH="$PYTHONPATH:$PATHTO/lib"
+export PATH="$PATH:$PATHTO/bin"
+```
 
-	1. BAM files (of sequencing reads for factor of interest and control) :
-	Files must have chromosome IDs starting with "chr"
-	Files must be sorted and indexed using SAMtools in order for bamToGFF.py to work. (http://samtools.sourceforge.net/samtools.shtml)
+## Usage
 
-	1. Peak file of constituent enhancers :
-	File must be in GFF format with the following columns:
+Run the main program with the following command:
 
-			column 1: chromosome (chr#)
-			column 2: unique ID for each constituent enhancer region
-			column 4: start of constituent
-			column 5: end of constituent
-			column 7: strand (+,-,.)
-			column 9: unique ID for each constituent enhancer region
-			
-		NOTE: if value for column 2 and 9 differ, value in column 2 will be used
+```bash
+ROSE_main.py [options] -g [GENOME] -i [INPUT_REGION_GFF] -r [RANKBY_BAM_FILE] -o [OUTPUT_FOLDER] [OPTIONAL_FLAGS]
+```
 
-1. DIRECTORY structure
-	```
-	├── LICENSE.txt
-	│
-	├── README.md
-	│
-	├── bin
-	│   ├── ROSE_bamToGFF.py : calculates density of .bam reads in .gff regions
-	│   ├── ROSE_callSuper.R : ranks regions by their densities, creates cutoff
-	│   ├── ROSE_geneMapper.py : assigns stitched enhancers to genes
-	│   └── ROSE_main.py : main program
-	└── lib
-	    └── ROSE_utils.py : utilities method
+## Dependencies
 
-	Total: 2 directories, 8 files
-	```
-1. DEPENDENCIES
+- Python 3
+- [samtools](http://www.htslib.org/)
+- R (version > 3.4)
+- bedtools (version > 2)
 
-	* samtools
-	* R version > 3.4
-	* bedtools > 2
-	* python3
+## Input Requirements
+
+### General
+- All input files must reside in a single directory.
+
+### Annotation File
+- Must be in UCSC table track format ([UCSC Table Browser](https://genome.ucsc.edu/cgi-bin/hgTables))
+- Filename: `[GENOME]_refseq.ucsc` (e.g., `hg19_refseq.ucsc`)
+- Place in the `annotation/` folder within the input directory
+
+### BAM Files
+- Chromosome IDs must start with `chr`
+- Files must be sorted and indexed using SAMtools
+
+### Peak File (Constituent Enhancers)
+- Format: GFF
+- Required columns:
+	- Column 1: Chromosome (chr#)
+	- Column 2: Unique ID for each constituent enhancer region
+	- Column 4: Start position
+	- Column 5: End position
+	- Column 7: Strand (`+`, `-`, or `.`)
+	- Column 9: Unique ID for each constituent enhancer region
+- **Note:** If values in columns 2 and 9 differ, column 2 will be used.
+
+## Directory Structure
+
+```
+├── LICENSE.txt
+├── README.md
+├── bin/
+│   ├── ROSE_bamToGFF.py      # Calculates density of .bam reads in .gff regions
+│   ├── ROSE_callSuper.R      # Ranks regions by their densities, creates cutoff
+│   ├── ROSE_geneMapper.py    # Assigns stitched enhancers to genes
+│   └── ROSE_main.py          # Main program
+└── lib/
+	└── ROSE_utils.py         # Utility methods
+```
+
+## References
+
+- Original source: [Bitbucket - young_computation/rose](https://bitbucket.org/young_computation/rose/src/master/)
+
+For questions or support, please contact the repository maintainers.
