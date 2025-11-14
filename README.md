@@ -10,7 +10,7 @@ ROSE enables researchers to:
 - Rank enhancer regions by signal density
 - Map stitched enhancers to genes
 
-## Key Changes
+## Key Changes (from [source](https://bitbucket.org/young_computation/rose/src/master/))
 
 - Compatible with Python 3
 - Executable independent of installation directory
