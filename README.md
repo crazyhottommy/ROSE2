@@ -66,8 +66,7 @@ All input files must reside in a single directory.
 	- Column 7: Strand (`+`, `-`, or `.`)
 	- Column 8: Phase
 	- Column 9: Unique ID for each constituent enhancer region
-- Required columns: 1,2,4,5,7,9
-- Columns 3,6,8 are not used by ROSE, therefore no guidance for their values is provided.
+- Columns 3,6,8 are not used by ROSE; they can have the value `.`.
 - **Note:** If values in columns 2 and 9 differ, column 2 will be used.
 
 ## Directory Structure
