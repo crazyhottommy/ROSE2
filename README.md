@@ -21,9 +21,9 @@ ROSE enables researchers to:
 Clone the repository and set up the environment variables:
 
 ```bash
-PATHTO=/path/to/ROSE
-export PYTHONPATH="$PYTHONPATH:$PATHTO/lib"
-export PATH="$PATH:$PATHTO/bin"
+ROSEPATH=/path/to/ROSE
+export PYTHONPATH="$PYTHONPATH:$ROSEPATH/lib"
+export PATH="$PATH:$ROSEPATH/bin"
 ```
 
 ## Usage
@@ -31,7 +31,7 @@ export PATH="$PATH:$PATHTO/bin"
 Run the main program with the following command:
 
 ```bash
-ROSE_main.py [options] -g [GENOME] -i [INPUT_REGION_GFF] -r [RANKBY_BAM_FILE] -o [OUTPUT_FOLDER] [OPTIONAL_FLAGS]
+ROSE_main.py -g [GENOME] -i [INPUT_REGION_GFF] -r [RANKBY_BAM_FILE] -o [OUTPUT_FOLDER] [OPTIONAL_FLAGS]
 ```
 
 ## Dependencies
@@ -43,19 +43,18 @@ ROSE_main.py [options] -g [GENOME] -i [INPUT_REGION_GFF] -r [RANKBY_BAM_FILE] -o
 
 ## Input Requirements
 
-### General
-- All input files must reside in a single directory.
+All input files must reside in a single directory.
 
-### Annotation File
+### Annotation File (`-g [GENOME]`)
 - Must be in UCSC table track format ([UCSC Table Browser](https://genome.ucsc.edu/cgi-bin/hgTables))
 - Filename: `[GENOME]_refseq.ucsc` (e.g., `hg19_refseq.ucsc`)
 - Place in the `annotation/` folder within the input directory
 
-### BAM Files
+### BAM File (`-r [RANKBY_BAM_FILE]`)
 - Chromosome IDs must start with `chr`
-- Files must be sorted and indexed using SAMtools
+- Files must be coordinate sorted and indexed using SAMtools
 
-### Peak File (Constituent Enhancers)
+### Peak File (Constituent Enhancers, `-i [INPUT_REGION_GFF]`)
 - Format: GFF
 - Required columns:
 	- Column 1: Chromosome (chr#)
