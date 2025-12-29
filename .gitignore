@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ROSE output
+gff/
+mappedGFF/
+*.pdf
+*.png
+*_REGION_MAP.txt
+*_MAPPED.gff
+*_STITCHED.gff
+*_SuperStitched.table.txt
+*_AllStitched.table.txt
+*_REGION_TO_GENE.txt
+*_GENE_TO_REGION.txt
+*.table_withGENES.txt
