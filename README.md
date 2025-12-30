@@ -374,6 +374,12 @@ ROSE2 v2.0 is **dramatically faster** than previous versions:
 | Gene mapping | 6 hours | 12 seconds | **1,772×** |
 | Memory usage | 5 GB | 500 MB | **90% reduction** |
 
+**Real-world example (measured on MOLM-14 BRD4 ChIP-seq):**
+- **Runtime**: 1.7 minutes
+- **Peak memory**: 620 MB
+- **Input**: 22,138 narrowPeak regions (MACS3 output)
+- **Genome**: HG38 with 58,037 RefSeq transcripts
+
 **Optimizations:**
 - Interval-based coverage calculation (500× faster)
 - Smart gene search algorithm (eliminates billions of redundant checks)
@@ -431,9 +437,10 @@ If you use ROSE2 in your research, please cite:
 
 ## Credits
 
-**Original Algorithm**: Richard Young Lab, Whitehead Institute
-**Python 3 Port**: St. Jude Children's Research Hospital, Abra Lab
-**Modernization & Optimization**: Ming (Tommy) Tang
+**Original Algorithm**: Richard Young Lab, Whitehead Institute. 
+**Python 3 Port**: St. Jude Children's Research Hospital, Abra Lab. 
+**Modernization & Optimization**: Ming (Tommy) Tang. 
+
 - Modern Python packaging and PyPI distribution
 - 1,700× performance improvements
 - 90% memory reduction
