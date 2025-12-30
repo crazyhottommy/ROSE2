@@ -27,10 +27,10 @@ However, identifying which genomic regions are super-enhancers is challenging be
 
 Super-enhancers are:
 
-🎯 **Therapeutic targets**: BET inhibitors and other drugs target super-enhancer components. 
-🔬 **Biomarkers**: Super-enhancer landscapes distinguish cell types and disease states. 
-🧬 **Mechanistic insights**: Reveal how transcription factors and cofactors coordinate gene expression. 
-💊 **Drug development**: Understanding super-enhancers helps design selective therapies. 
+- 🎯 **Therapeutic targets**: BET inhibitors and other drugs target super-enhancer components.
+- 🔬 **Biomarkers**: Super-enhancer landscapes distinguish cell types and disease states. 
+- 🧬 **Mechanistic insights**: Reveal how transcription factors and cofactors coordinate gene expression. 
+- 💊 **Drug development**: Understanding super-enhancers helps design selective therapies. 
 
 **Example applications:**
 - **Cancer biology**: Identify oncogene-driving super-enhancers (MYC, NOTCH1, RUNX1)
