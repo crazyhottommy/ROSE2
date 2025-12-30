@@ -5,6 +5,13 @@ All notable changes to ROSE2 are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2025-12-30
+
+### Fixed
+- Updated all repository URLs from stjude/ROSE2 to crazyhottommy/ROSE2
+- Corrected PyPI project metadata links (homepage, documentation, bug tracker)
+- Updated citation URL in README
+
 ## [2.0.0] - 2025-12-30
 
 Complete modernization and optimization of ROSE2 for Python 3.8+ with dramatic performance improvements.
