@@ -266,6 +266,9 @@ The plot shows cumulative ChIP-seq signal vs. rank:
 - **Inflection point**: Where the curve "bends" sharply upward
 - **Super-enhancers**: Regions above the inflection point (typically top 5-10%)
 
+![Example Hockey Stick Plot](brd4_super.png)
+*Example: BRD4 super-enhancer analysis showing the characteristic "hockey stick" curve. The red line indicates the inflection point separating typical enhancers (left) from super-enhancers (right).*
+
 **What to look for:**
 - Clear separation between typical and super-enhancers
 - Super-enhancers should be 5-10× stronger than typical enhancers
