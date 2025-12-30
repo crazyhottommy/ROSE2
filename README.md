@@ -422,7 +422,7 @@ If you use ROSE2 in your research, please cite:
 > Whyte WA, Orlando DA, Hnisz D, et al. Master transcription factors and mediator establish super-enhancers at key cell identity genes. *Cell*. 2013;153(2):307-319. doi:10.1016/j.cell.2013.03.035
 
 **ROSE2 modernization and optimization:**
-> Tang M (2025). ROSE2: High-performance super-enhancer identification for Python 3. https://github.com/stjude/ROSE2
+> Tang M (2025). ROSE2: High-performance super-enhancer identification for Python 3. https://github.com/crazyhottommy/ROSE2
 
 ---
 
@@ -450,7 +450,7 @@ If you use ROSE2 in your research, please cite:
 ## Getting Help
 
 - **Documentation**: [Full guide](TECHNICAL_NOTES.md)
-- **Issues**: [GitHub Issues](https://github.com/stjude/ROSE2/issues)
+- **Issues**: [GitHub Issues](https://github.com/crazyhottommy/ROSE2/issues)
 - **Email**: tangming2005@gmail.com
 
 ---

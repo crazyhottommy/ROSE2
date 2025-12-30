@@ -53,10 +53,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/stjude/ROSE2"
-Documentation = "https://github.com/stjude/ROSE2/blob/master/README.md"
-Repository = "https://github.com/stjude/ROSE2"
-"Bug Tracker" = "https://github.com/stjude/ROSE2/issues"
+Homepage = "https://github.com/crazyhottommy/ROSE2"
+Documentation = "https://github.com/crazyhottommy/ROSE2/blob/master/README.md"
+Repository = "https://github.com/crazyhottommy/ROSE2"
+"Bug Tracker" = "https://github.com/crazyhottommy/ROSE2/issues"
 
 [project.scripts]
 rose2 = "rose2.cli:main"
