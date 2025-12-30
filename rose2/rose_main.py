@@ -228,7 +228,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         "-i",
         "--input",
         required=True,
-        help="Input .gff or .bed file of binding sites used to make enhancers",
+        help="Input file of binding sites (.gff, .bed, .narrowPeak, or .broadPeak)",
     )
     required.add_argument(
         "-r", "--rankby", required=True, help="BAM file to rank enhancers by"
@@ -282,26 +282,27 @@ def main(argv: Optional[List[str]] = None) -> int:
     mapped_folder = utils.format_folder(os.path.join(out_folder, "mappedGFF"), True)
 
     # Process input file
-    if args.input.endswith(".bed"):
-        # Convert BED to GFF
+    if args.input.endswith(".bed") or args.input.endswith(".narrowPeak") or args.input.endswith(".broadPeak"):
+        # Convert BED/narrowPeak/broadPeak to GFF
         input_gff_name = Path(args.input).stem
         input_gff_file = os.path.join(gff_folder, f"{input_gff_name}.gff")
+        logger.info(f"Converting BED/Peak file to GFF format")
         utils.bed_to_gff(args.input, input_gff_file)
     elif args.input.endswith(".gff"):
         # Copy GFF to folder
         input_gff_file = args.input
         subprocess.run(["cp", input_gff_file, gff_folder], check=True)
     else:
-        logger.warning("INPUT FILE DOES NOT END IN .gff or .bed. ASSUMING .gff FILE FORMAT")
+        logger.warning("INPUT FILE DOES NOT END IN .gff, .bed, .narrowPeak, or .broadPeak. ASSUMING .gff FILE FORMAT")
         input_gff_file = args.input
         subprocess.run(["cp", input_gff_file, gff_folder], check=True)
 
-    # Get list of BAM files to process
-    bam_file_list = [args.rankby]
+    # Get list of BAM files to process (convert to absolute paths)
+    bam_file_list = [str(Path(args.rankby).resolve())]
     if args.control:
-        bam_file_list.append(args.control)
+        bam_file_list.append(str(Path(args.control).resolve()))
     if args.bams:
-        bam_file_list += args.bams.split(",")
+        bam_file_list += [str(Path(b).resolve()) for b in args.bams.split(",")]
         bam_file_list = utils.uniquify(bam_file_list)
 
     # Set stitching parameters
@@ -313,15 +314,15 @@ def main(argv: Optional[List[str]] = None) -> int:
     logger.info(f"USING {input_gff_file} AS THE INPUT GFF")
     input_name = Path(input_gff_file).stem
 
-    # Get annotation file
-    cwd = Path.cwd()
+    # Get annotation file (use package directory, not current directory)
+    package_dir = Path(__file__).parent
     genome_dict = {
-        "HG18": cwd / "rose2" / "annotation" / "hg18_refseq.ucsc",
-        "MM9": cwd / "rose2" / "annotation" / "mm9_refseq.ucsc",
-        "HG19": cwd / "rose2" / "annotation" / "hg19_refseq.ucsc",
-        "HG38": cwd / "rose2" / "annotation" / "hg38_refseq.ucsc",
-        "MM8": cwd / "rose2" / "annotation" / "mm8_refseq.ucsc",
-        "MM10": cwd / "rose2" / "annotation" / "mm10_refseq.ucsc",
+        "HG18": package_dir / "annotation" / "hg18_refseq.ucsc",
+        "MM9": package_dir / "annotation" / "mm9_refseq.ucsc",
+        "HG19": package_dir / "annotation" / "hg19_refseq.ucsc",
+        "HG38": package_dir / "annotation" / "hg38_refseq.ucsc",
+        "MM8": package_dir / "annotation" / "mm8_refseq.ucsc",
+        "MM10": package_dir / "annotation" / "mm10_refseq.ucsc",
     }
 
     if args.custom_genome:
@@ -480,28 +481,28 @@ def main(argv: Optional[List[str]] = None) -> int:
             "rose2-geneMapper",
             "--custom", args.custom_genome,
             "-i", super_table_file,
-            "-r", "TRUE",
+            "-r",  # FIXED: -r is a boolean flag, doesn't take a value
         ] + control_flag
 
         cmd2 = [
             "rose2-geneMapper",
             "--custom", args.custom_genome,
             "-i", all_table_file,
-            "-r", "TRUE",
+            "-r",  # FIXED: -r is a boolean flag, doesn't take a value
         ] + control_flag
     else:
         cmd1 = [
             "rose2-geneMapper",
             "-g", args.genome,
             "-i", super_table_file,
-            "-r", "TRUE",
+            "-r",  # FIXED: -r is a boolean flag, doesn't take a value
         ] + control_flag
 
         cmd2 = [
             "rose2-geneMapper",
             "-g", args.genome,
             "-i", all_table_file,
-            "-r", "TRUE",
+            "-r",  # FIXED: -r is a boolean flag, doesn't take a value
         ] + control_flag
 
     # Gene mapper for super-enhancers

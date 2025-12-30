@@ -109,11 +109,26 @@ def map_enhancer_to_gene(
         )
         proximal_genes = [locus.ID() for locus in proximal_loci]
 
-        # Find all distal genes (for finding closest gene)
-        distal_loci = tss_collection.get_overlap(
-            utils.make_search_locus(enhancer_locus, 50000000, 50000000), "both"
-        )
-        distal_genes = [locus.ID() for locus in distal_loci]
+        # OPTIMIZED: Instead of searching 50Mb window (2M window checks = 6 hours!),
+        # use smarter logic:
+        # - If we have overlapping/proximal genes (≤50kb), they will ALWAYS be closest
+        # - Only search further if NO nearby genes found
+        # - Use graduated search to avoid checking millions of windows
+        distal_genes = []
+
+        if not overlapping_genes and not proximal_genes:
+            # No nearby genes - need to search further for closest gene
+            # Use graduated distances to minimize window checks
+            search_distances = [500000, 2000000, 10000000]  # 500kb, 2Mb, 10Mb
+
+            for dist in search_distances:
+                distal_loci = tss_collection.get_overlap(
+                    utils.make_search_locus(enhancer_locus, dist, dist), "both"
+                )
+                distal_genes = [locus.ID() for locus in distal_loci]
+                if distal_genes:
+                    break  # Found genes, stop expanding
+            # If still no genes after 10Mb, closest_gene will be empty (handled below)
 
         # Uniquify gene lists
         overlapping_genes = utils.uniquify(overlapping_genes)
@@ -295,15 +310,15 @@ def main(argv: Optional[List[str]] = None) -> int:
     else:
         out_folder = str(Path(enhancer_file).parent) + "/"
 
-    # Get annotation file
-    cwd = Path.cwd()
+    # Get annotation file (use package directory, not current directory)
+    package_dir = Path(__file__).parent
     genome_dict = {
-        "HG18": cwd / "rose2" / "annotation" / "hg18_refseq.ucsc",
-        "MM9": cwd / "rose2" / "annotation" / "mm9_refseq.ucsc",
-        "HG19": cwd / "rose2" / "annotation" / "hg19_refseq.ucsc",
-        "HG38": cwd / "rose2" / "annotation" / "hg38_refseq.ucsc",
-        "MM8": cwd / "rose2" / "annotation" / "mm8_refseq.ucsc",
-        "MM10": cwd / "rose2" / "annotation" / "mm10_refseq.ucsc",
+        "HG18": package_dir / "annotation" / "hg18_refseq.ucsc",
+        "MM9": package_dir / "annotation" / "mm9_refseq.ucsc",
+        "HG19": package_dir / "annotation" / "hg19_refseq.ucsc",
+        "HG38": package_dir / "annotation" / "hg38_refseq.ucsc",
+        "MM8": package_dir / "annotation" / "mm8_refseq.ucsc",
+        "MM10": package_dir / "annotation" / "mm10_refseq.ucsc",
     }
 
     if args.custom_genome:
